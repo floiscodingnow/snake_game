@@ -1,16 +1,34 @@
-from turtle import Screen, Turtle
+from turtle import Screen
+import time
+from snake import Snake
+from food import Food
 
 screen = Screen()
 screen.setup(width=600, height=600)
-screen.bgcolor("black")
+screen.bgcolor("yellow")
 screen.title("Snakespiel - für Pascal und Santiago")
+screen.tracer(0)
 
-sarting_positions = [(0,0),(-20,0),(-40,0)] 
+snake = Snake()
+food = Food()
 
-for positions in range(0,3):
-    new_segment = Turtle(shape="square")
-    new_segment.color("white")
-    new_segment.goto(sarting_positions[positions])
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
+
+
+game_is_on = True
+
+while game_is_on:
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
+
+    if snake.head.distance(food) < 12:
+        print("Hmmm Pascal und Santi, das war super lecker")
+        food.refresh()
 
 
 screen.exitonclick()
